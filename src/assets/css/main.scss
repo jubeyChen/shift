@@ -2,27 +2,51 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
-    font-family: '黑體-繁', 'Microsoft JhengHei', '微軟正黑體','Noto Sans TC';
+* {
+  font-family: "黑體-繁", "Microsoft JhengHei", "微軟正黑體", "Noto Sans TC";
 }
 
-.mask{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.3);
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
 
-    .mask-content{
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 10px;
-        width: 800px;
-        height: 70vh;
+  .mask-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 800px;
+    height: auto;
+    max-height: 70vh;
+  }
+}
+
+.input {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  width: 100%;
+
+  &.error-input {
+    border: 1px solid red;
+
+    &:focus {
+      outline: 1px solid red;
     }
+  }
+}
+
+.error-message {
+  color: red;
+  font-size: 13px;
+  position: absolute;
+  top: 46px;
+  left: 0;
 }

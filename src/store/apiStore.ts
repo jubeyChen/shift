@@ -1,7 +1,8 @@
 import { defineStore } from "pinia";
 import { signInWithPopup, UserCredential, signOut } from "firebase/auth";
-import { auth, googleProvider } from "../firebase";
+import { auth, googleProvider, db } from "../firebase";
 import { from, Observable, catchError, map } from "rxjs";
+import { doc, getDoc } from "firebase/firestore";
 
 export const useApiStore = defineStore("apiStore", () => {
   function handleError(error: any) {
@@ -21,12 +22,28 @@ export const useApiStore = defineStore("apiStore", () => {
     );
   }
 
-   function logout(): Observable<void> {
+  function logout(): Observable<void> {
     return from(signOut(auth)).pipe(
-      map(() => {
-       
+      map(() => {}),
+      catchError((error) => {
+        handleError(error);
+        return new Observable<never>();
+      })
+    );
+  }
+
+  function getData(): Observable<any> {
+    return from(getDoc(doc(db, "people-data", "yRz4x8hNBVSVicNecMdc"))).pipe(
+      map((docSnap) => {
+        if (docSnap.exists()) {
+          return docSnap.data();
+        } else {
+          console.log("文件不存在!");
+          return [];
+        }
       }),
       catchError((error) => {
+        console.error("獲取文件時出錯:", error);
         handleError(error);
         return new Observable<never>();
       })
@@ -37,5 +54,6 @@ export const useApiStore = defineStore("apiStore", () => {
     handleError,
     loginWithGoogle,
     logout,
+    getData,
   };
 });
